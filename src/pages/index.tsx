@@ -160,6 +160,7 @@ export const getStaticProps: GetStaticProps<HomeProps> = async () => {
     }-${tomorrow.getDate()}`,
   );
 
+  // Remove movies without posters
   const todaysMoviesWithPosters = todaysMovies.data.results.filter(
     (movie) => movie.poster_path !== null,
   );
