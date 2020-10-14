@@ -1,14 +1,11 @@
-interface Dates {
-  yesterday: Date;
-  tomorrow: Date;
+import { format } from 'date-fns';
+
+interface IDate {
+  formattedDate: string;
 }
 
-export default function GetDates(): Dates {
-  const tomorrow = new Date();
-  const yesterday = new Date();
+export default function GetDates(): IDate {
+  const formattedDate = format(new Date(), "yyyy'-'MM'-'dd");
 
-  tomorrow.setDate(tomorrow.getDate() + 1);
-  yesterday.setDate(yesterday.getDate() - 1);
-
-  return { yesterday, tomorrow };
+  return { formattedDate };
 }

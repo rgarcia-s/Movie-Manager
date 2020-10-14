@@ -81,15 +81,15 @@ const Home: React.FC<HomeProps> = ({
         autoPlay
         interval={2000}
       >
-        {trending.map((movie) => (
-          <div className="main-carousel-div" key={movie.id}>
+        {trending.map((show) => (
+          <div className="main-carousel-div" key={show.id}>
             <img
-              src={`https://image.tmdb.org/t/p/w1280${movie.backdrop_path}`}
-              alt={movie.title}
+              src={`https://image.tmdb.org/t/p/w1280${show.backdrop_path}`}
+              alt={show.title}
             />
             <div className="carousel-info-div">
-              <strong>{movie.title || movie.name}</strong>
-              <i>{movie.original_title || movie.original_name}</i>
+              <strong>{show.title || show.name}</strong>
+              <i>{show.original_title || show.original_name}</i>
             </div>
           </div>
         ))}
@@ -148,16 +148,10 @@ export const getStaticProps: GetStaticProps<HomeProps> = async () => {
     `https://api.themoviedb.org/3/discover/tv?api_key=${process.env.API_KEY}&language=pt-BR&sort_by=popularity.desc&page=1&timezone=America%2FNew_York&include_null_first_air_dates=false`,
   );
 
-  const { yesterday, tomorrow } = GetDates();
+  const { formattedDate } = GetDates();
 
   const todaysMovies = await api.get(
-    `https://api.themoviedb.org/3/discover/movie?api_key=${
-      process.env.API_KEY
-    }&language=pt-BR&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&primary_release_date.gte=${yesterday.getFullYear()}-${
-      yesterday.getMonth() + 1
-    }-${yesterday.getDate()}&primary_release_date.lte=${tomorrow.getFullYear()}-${
-      tomorrow.getMonth() + 1
-    }-${tomorrow.getDate()}`,
+    `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.API_KEY}&language=pt-BR&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&primary_release_date.gte=${formattedDate}&primary_release_date.lte=${formattedDate}`,
   );
 
   // Remove movies without posters
